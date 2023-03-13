@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from "styled-components"
+import styled, { createGlobalStyle } from 'styled-components'
 
 export const Arrow = styled.div`
   width: 100%;
@@ -13,10 +13,10 @@ export const Arrow = styled.div`
   }
 `
 
-type snakeCords = {
-  snakeX: number;
-  snakeY: number;
-};
+interface snakeCords {
+  snakeX: number
+  snakeY: number
+}
 
 export const SnakeHead = styled.div<snakeCords>`
   width: 30px;
