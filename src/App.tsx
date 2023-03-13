@@ -1,16 +1,16 @@
-import {Arrow, ArrowBoard, GlobalStyle, Header, Main, Section} from './styles'
-import CanvasSnake from './components/canvas/Canvas'
+import { Arrow, ArrowBoard, GlobalStyle, Header, Main, Section } from './styles'
+import CanvasSnake from './components/canvas/CanvasSnake'
 
-function App() {
+function App (): JSX.Element {
   return (
     <>
-      <GlobalStyle/>
+      <GlobalStyle />
       <Main>
         <Section>
           <Header>
             <h1>Snake</h1>
           </Header>
-          <CanvasSnake/>
+          <CanvasSnake />
           <ArrowBoard>
             <Arrow>Up</Arrow>
             <Arrow>Down</Arrow>
@@ -25,6 +25,3 @@ function App() {
 }
 
 export default App
-
-
-
