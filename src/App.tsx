@@ -1,8 +1,11 @@
-import { Arrow, ArrowBoard, GlobalStyle, Header, Main, Section } from './styles'
+import { Arrow, ArrowBoard, GlobalStyle, Header, Main, Section } from './styles/styles'
 import CanvasSnake from './components/canvas/CanvasSnake'
 import { ArrowIcon } from './components/Icons'
+import { useMoveSnake } from './hooks/useMoveSnake'
 
 function App (): JSX.Element {
+  const { moveSnake } = useMoveSnake()
+
   return (
     <>
       <GlobalStyle />
@@ -13,10 +16,10 @@ function App (): JSX.Element {
           </Header>
           <CanvasSnake />
           <ArrowBoard>
-            <Arrow><ArrowIcon direction='up' /></Arrow>
-            <Arrow><ArrowIcon direction='down' /></Arrow>
-            <Arrow><ArrowIcon direction='left' /></Arrow>
-            <Arrow><ArrowIcon direction='right' /></Arrow>
+            <Arrow onClick={() => moveSnake(undefined, 'ArrowUp')}><ArrowIcon direction='ArrowUp' /></Arrow>
+            <Arrow onClick={() => moveSnake(undefined, 'ArrowDown')}><ArrowIcon direction='ArrowDown' /></Arrow>
+            <Arrow><ArrowIcon direction='ArrowLeft' /></Arrow>
+            <Arrow><ArrowIcon direction='ArrowRight' /></Arrow>
           </ArrowBoard>
         </Section>
 
