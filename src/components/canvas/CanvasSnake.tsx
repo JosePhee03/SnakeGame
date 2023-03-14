@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Canvas, SnakeHead } from '../../styles'
+import { Canvas, SnakeHead } from '../../styles/styles'
 import { useMoveSnake } from '../../hooks/useMoveSnake'
 import { useEffect, useState } from 'react'
 import AddBody from '../AddBody'
