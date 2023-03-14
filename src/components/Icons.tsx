@@ -1,16 +1,12 @@
-interface directionType {
-  direction: 'up' | 'left' | 'right' | 'down'
-}
+import { directionType } from '../types/types'
 
 function ArrowIcon ({ direction }: directionType): JSX.Element {
   const DIRECTIONS = {
-    up: 0,
-    down: -180,
-    left: -90,
-    right: 90
+    ArrowUp: 0,
+    ArrowDown: -180,
+    ArrowLeft: -90,
+    ArrowRight: 90
   }
-
-  console.log({ DIRECTIONS })
 
   return (
     <svg
