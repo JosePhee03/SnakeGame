@@ -1,21 +1,24 @@
 import { useEffect, useState } from 'react'
+import { bodyType, keyTypes } from '../types/types'
 
-export function useMoveSnake (): { snakeX: number, snakeY: number } {
-  const [snakeCords, setSnakeCoords] = useState({ snakeY: 0, snakeX: 0 })
-  const { snakeX, snakeY } = snakeCords
+type moveSnakeType = (event?: KeyboardEvent, key?: keyTypes) => void
 
-  const moveSnake = (event: KeyboardEvent): void => {
-    const key = event.key
+export function useMoveSnake (body: bodyType): { snakeX: number, snakeY: number, moveSnake: moveSnakeType } {
+  const [newBody, setNewBody] = useState(body[0])
+  const { snakeX, snakeY } = newBody
 
-    switch (key) {
+  const moveSnake = (event?: KeyboardEvent, key?: keyTypes): void => {
+    const keyEvent = event?.key
+
+    switch (keyEvent ?? key) {
       case 'ArrowDown':
-        return setSnakeCoords({ snakeX, snakeY: snakeY + 30 })
+        return setNewBody({ snakeX, snakeY: snakeY + 30 })
       case 'ArrowUp':
-        return setSnakeCoords({ snakeX, snakeY: snakeY - 30 })
+        return setNewBody({ snakeX, snakeY: snakeY - 30 })
       case 'ArrowLeft':
-        return setSnakeCoords({ snakeY, snakeX: snakeX - 30 })
+        return setNewBody({ snakeY, snakeX: snakeX - 30 })
       case 'ArrowRight':
-        return setSnakeCoords({ snakeY, snakeX: snakeX + 30 })
+        return setNewBody({ snakeY, snakeX: snakeX + 30 })
     }
   }
 
@@ -25,7 +28,7 @@ export function useMoveSnake (): { snakeX: number, snakeY: number } {
     return () => {
       window.removeEventListener('keydown', moveSnake)
     }
-  }, [snakeCords])
+  }, [newBody])
 
-  return { snakeX, snakeY }
+  return { snakeX, snakeY, moveSnake }
 }
