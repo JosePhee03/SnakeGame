@@ -1,32 +1,31 @@
 import styled from 'styled-components'
 import { Canvas, SnakeHead } from '../../styles/styles'
 import { useMoveSnake } from '../../hooks/useMoveSnake'
-import { useEffect, useState } from 'react'
-import AddBody from '../AddBody'
+import { useContext, useEffect } from 'react'
+import { BodyContext, bodyContextType } from '../../context/bodyContext'
 
 function CanvasSnake (): JSX.Element {
-  const INITIAL_VALUE = [{ x: 0, y: 0 }]
-
-  const { snakeX, snakeY } = useMoveSnake()
-  const [body, setBody] = useState(INITIAL_VALUE)
+  const { body, setBody } = useContext(BodyContext) as bodyContextType
+  const { snakeX, snakeY } = useMoveSnake(body)
 
   useEffect(() => {
-    let newBody = []
+    let newBody = body
 
     const beforeBody = body
 
     newBody = body.map((coord, index) => (
 
       index === 0
-        ? { ...coord, x: snakeX, y: snakeY }
-        : { ...coord, x: beforeBody[index - 1].x, y: beforeBody[index - 1].y }
+        ? { ...coord, snakeY, snakeX }
+        : { ...coord, snakeX: beforeBody[index - 1].snakeX, snakeY: beforeBody[index - 1].snakeY }
     ))
 
     if (snakeX === 300 && snakeY === 300) {
-      AddBody(newBody)
+      newBody.push({ snakeX: -30, snakeY: -30 })
+      setBody(newBody)
+    } else {
+      setBody(newBody)
     }
-
-    setBody(newBody)
   }, [snakeX, snakeY])
 
   return (
@@ -35,8 +34,8 @@ function CanvasSnake (): JSX.Element {
         {body.map((coord, index) => (
           <SnakeHead
             key={index}
-            snakeX={coord.x}
-            snakeY={coord.y}
+            snakeX={coord.snakeX}
+            snakeY={coord.snakeY}
           />
 
         ))}
