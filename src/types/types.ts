@@ -7,3 +7,5 @@ export type keyTypes =
 export interface directionType {
   direction: keyTypes
 }
+
+export type bodyType = Array<{ snakeX: number, snakeY: number }>
