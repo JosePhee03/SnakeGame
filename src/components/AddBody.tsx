@@ -1,10 +1,9 @@
+import { BodyType } from '../types/types'
 
-function AddBody (body: bodyType): bodyType {
-  body.push({ x: -30, y: -30 })
-
-  return body
+function AddBody (body: BodyType): BodyType {
+  const newBody = [...body]
+  newBody.push({ snakeX: -30, snakeY: -30 })
+  return newBody
 }
 
 export default AddBody
-
-type bodyType = Array<{ x: number, y: number }>
