@@ -16,7 +16,7 @@ function App (): JSX.Element {
     const { newBody, newSnakeHead } = moveSnake(key, body)
     const newSnakeX = newSnakeHead.snakeX
     const newSnakeY = newSnakeHead.snakeY
-    if (newSnakeX === 300 && newSnakeY === 300) {
+    if (newSnakeX === 320 && newSnakeY === 320) {
       const addBody = AddBody(newBody)
       return dispatch({ type: 'MOVE', payload: addBody })
     }
