@@ -1,3 +1,4 @@
+import { snakeSize } from '../styles/styles'
 import { BodyType, KeyTypes, SnakeCoords } from '../types/types'
 
 export function snakeHead (body: BodyType, key: KeyTypes): SnakeCoords {
@@ -6,12 +7,12 @@ export function snakeHead (body: BodyType, key: KeyTypes): SnakeCoords {
 
   switch (key) {
     case 'ArrowDown':
-      return ({ snakeX, snakeY: snakeY + 30 })
+      return ({ snakeX, snakeY: snakeY + snakeSize })
     case 'ArrowUp':
-      return ({ snakeX, snakeY: snakeY - 30 })
+      return ({ snakeX, snakeY: snakeY - snakeSize })
     case 'ArrowLeft':
-      return ({ snakeY, snakeX: snakeX - 30 })
+      return ({ snakeY, snakeX: snakeX - snakeSize })
     case 'ArrowRight':
-      return ({ snakeY, snakeX: snakeX + 30 })
+      return ({ snakeY, snakeX: snakeX + snakeSize })
   }
 }
