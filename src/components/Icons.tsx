@@ -1,6 +1,6 @@
-import { directionType } from '../types/types'
+import { DirectionType } from '../types/types'
 
-function ArrowIcon ({ direction }: directionType): JSX.Element {
+function ArrowIcon ({ direction }: DirectionType): JSX.Element {
   const DIRECTIONS = {
     ArrowUp: 0,
     ArrowDown: -180,
