@@ -1,6 +1,6 @@
 import styled, { createGlobalStyle } from 'styled-components'
 
-const snakeSize = 32
+export const snakeSize = 32
 
 export const Arrow = styled.div`
   width: 100%;
@@ -33,14 +33,14 @@ export const ArrowBoard = styled.div`
   width: 100%;
   height: 60px;
   display: flex;
-  background: #bbb;
+  background: #fdf800;
 `
 
 export const Canvas = styled.div`
-  width: calc(${snakeSize}*16px);
-  height: calc(${snakeSize}*16px);
+  width: calc(${snakeSize}*12px);
+  height: calc(${snakeSize}*12px);
   position: relative;
-  background: #ddd;
+  background: rgba(0, 0, 0, 0.3);
 `
 
 export const Header = styled.header`
@@ -48,7 +48,7 @@ export const Header = styled.header`
   justify-content: center;
   align-items: center;
   height: 60px;
-
+  background: #444;
 `
 
 export const Main = styled.main`
@@ -60,7 +60,6 @@ export const Main = styled.main`
 `
 
 export const Section = styled.section`
-  background: #303030;
   border-radius: 10px;
 `
 
