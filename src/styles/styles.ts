@@ -1,5 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components'
 
+const snakeSize = 32
+
 export const Arrow = styled.div`
   width: 100%;
   height: 100%;
@@ -19,8 +21,8 @@ interface snakeCords {
 }
 
 export const SnakeHead = styled.div<snakeCords>`
-  width: 30px;
-  height: 30px;
+  width: ${snakeSize}px;
+  height: ${snakeSize}px;
   position: absolute;
   top: ${props => props.snakeY}px;
   left: ${props => props.snakeX}px;
@@ -35,8 +37,8 @@ export const ArrowBoard = styled.div`
 `
 
 export const Canvas = styled.div`
-  width: 500px;
-  height: 500px;
+  width: calc(${snakeSize}*16px);
+  height: calc(${snakeSize}*16px);
   position: relative;
   background: #ddd;
 `
