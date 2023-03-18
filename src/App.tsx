@@ -3,25 +3,39 @@ import CanvasSnake from './components/canvas/CanvasSnake'
 import { ArrowIcon } from './components/Icons'
 import { useContext, useEffect } from 'react'
 import SnakeContext, { SnakeContextType } from './context/SnakeContext'
-import { MoveSnake } from './components/MoveSnake'
+import moveSnake from './components/moveSnake'
 import { KeyTypes } from './types/types'
-import AddBody from './components/AddBody'
+import AddBody from './components/addBody'
 
 function App (): JSX.Element {
   const { Snake, dispatch } = useContext(SnakeContext) as SnakeContextType
   const { body } = Snake
   const { snakeX, snakeY } = body[0]
 
-  const moveDown = (key: KeyTypes): void => {
-    const newSnakeHead = MoveSnake(body, key)
-    const newbody = body.map((e, i) => i === 0 ? newSnakeHead : e)
-    dispatch({ type: 'MOVE', payload: newbody })
+  const pressArrow = (key: KeyTypes): void => {
+    const { newBody, newSnakeHead } = moveSnake(key, body)
+    const newSnakeX = newSnakeHead.snakeX
+    const newSnakeY = newSnakeHead.snakeY
+    if (newSnakeX === 300 && newSnakeY === 300) {
+      const addBody = AddBody(newBody)
+      return dispatch({ type: 'MOVE', payload: addBody })
+    }
+    dispatch({ type: 'MOVE', payload: newBody })
+  }
+
+  const keyPressEvent = (event: KeyboardEvent): void => {
+    const eventKey = event.key
+    const keys: KeyTypes[] = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']
+    const key = keys.find(e => e === eventKey)
+    if (key !== undefined) pressArrow(key)
   }
 
   useEffect(() => {
-    if (snakeX === 300 && snakeY === 300) {
-      const newBody = AddBody(body)
-      dispatch({ type: 'MOVE', payload: newBody })
+    window.addEventListener('keydown', keyPressEvent)
+    console.log('render')
+
+    return () => {
+      window.removeEventListener('keydown', keyPressEvent)
     }
   }, [snakeX, snakeY])
 
@@ -35,10 +49,10 @@ function App (): JSX.Element {
           </Header>
           <CanvasSnake />
           <ArrowBoard>
-            <Arrow onClick={() => moveDown('ArrowUp')}><ArrowIcon direction='ArrowUp' /></Arrow>
-            <Arrow onClick={() => moveDown('ArrowDown')}><ArrowIcon direction='ArrowDown' /></Arrow>
-            <Arrow onClick={() => moveDown('ArrowLeft')}><ArrowIcon direction='ArrowLeft' /></Arrow>
-            <Arrow onClick={() => moveDown('ArrowRight')}><ArrowIcon direction='ArrowRight' /></Arrow>
+            <Arrow onClick={() => pressArrow('ArrowUp')}><ArrowIcon direction='ArrowUp' /></Arrow>
+            <Arrow onClick={() => pressArrow('ArrowDown')}><ArrowIcon direction='ArrowDown' /></Arrow>
+            <Arrow onClick={() => pressArrow('ArrowLeft')}><ArrowIcon direction='ArrowLeft' /></Arrow>
+            <Arrow onClick={() => pressArrow('ArrowRight')}><ArrowIcon direction='ArrowRight' /></Arrow>
           </ArrowBoard>
         </Section>
       </Main>
