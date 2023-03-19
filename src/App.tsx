@@ -1,49 +1,28 @@
 import { Arrow, ArrowBoard, GlobalStyle, Header, Main, Section } from './styles/styles'
 import CanvasSnake from './components/canvas/CanvasSnake'
 import { ArrowIcon } from './components/Icons'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import SnakeContext, { SnakeContextType } from './context/SnakeContext'
-import moveSnake from './components/moveSnake'
-import { KeyTypes } from './types/types'
-import AddBody from './components/addBody'
+import useHandleMove from './hooks/usehandleMove'
+import ModalGame from './components/ModalGame'
 
 function App (): JSX.Element {
   const { Snake, dispatch } = useContext(SnakeContext) as SnakeContextType
   const { body } = Snake
   const { snakeX, snakeY } = body[0]
+  const { pressArrow } = useHandleMove(body, dispatch)
 
-  const pressArrow = (key: KeyTypes): void => {
-    const { newBody, newSnakeHead } = moveSnake(key, body)
-    const newSnakeX = newSnakeHead.snakeX
-    const newSnakeY = newSnakeHead.snakeY
-    if (newSnakeX === 320 && newSnakeY === 320) {
-      const addBody = AddBody(newBody)
-      return dispatch({ type: 'MOVE', payload: addBody })
-    }
-    dispatch({ type: 'MOVE', payload: newBody })
+  if (snakeX < 0 || snakeX > 352 || snakeY < 0 || snakeY > 352) {
+    console.log('Game Over')
+    dispatch({ type: 'RESET', payload: null })
   }
-
-  const keyPressEvent = (event: KeyboardEvent): void => {
-    const eventKey = event.key
-    const keys: KeyTypes[] = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']
-    const key = keys.find(e => e === eventKey)
-    if (key !== undefined) pressArrow(key)
-  }
-
-  useEffect(() => {
-    window.addEventListener('keydown', keyPressEvent)
-    console.log('render')
-
-    return () => {
-      window.removeEventListener('keydown', keyPressEvent)
-    }
-  }, [snakeX, snakeY])
 
   return (
     <>
       <GlobalStyle />
       <Main>
         <Section>
+          <ModalGame />
           <Header>
             <h1>Snake</h1>
           </Header>
