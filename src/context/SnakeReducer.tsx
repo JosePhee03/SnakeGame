@@ -1,8 +1,9 @@
 import { BodyType, SnakeType } from '../types/types'
+import { INITIAL_VALUE } from './SnakeProvider'
 
-type DispatchType = 'MOVE' | 'ADD'
-
-export interface ActionType { type: DispatchType, payload: BodyType }
+export type ActionType =
+ | { type: 'MOVE' | 'ADD', payload: BodyType }
+ | { type: 'RESET', payload: null }
 
 function SnakeReducer (state: SnakeType, action: ActionType): SnakeType {
   switch (action.type) {
@@ -16,6 +17,8 @@ function SnakeReducer (state: SnakeType, action: ActionType): SnakeType {
         ...state,
         body: action.payload
       }
+    case 'RESET':
+      return INITIAL_VALUE
     default:
       return state
   }
