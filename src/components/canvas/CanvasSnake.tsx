@@ -6,7 +6,6 @@ import SnakeContext, { SnakeContextType } from '../../context/SnakeContext'
 function CanvasSnake (): JSX.Element {
   const { Snake } = useContext(SnakeContext) as SnakeContextType
   const { body } = Snake
-  const { snakeX, snakeY } = body[0]
 
   return (
     <>
@@ -20,20 +19,8 @@ function CanvasSnake (): JSX.Element {
 
         ))}
       </Canvas>
-      <Footer>
-        <h6>SnakeX: {snakeX}</h6>
-        <h6>SnakeY: {snakeY}</h6>
-        <h6>body: {JSON.stringify(body)}</h6>
-      </Footer>
     </>
   )
 }
 
 export default CanvasSnake
-
-const Footer = styled.footer`
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: beige;
-`
