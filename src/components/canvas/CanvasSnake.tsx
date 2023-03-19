@@ -1,4 +1,3 @@
-import styled from 'styled-components'
 import { Canvas, SnakeHead } from '../../styles/styles'
 import { useContext } from 'react'
 import SnakeContext, { SnakeContextType } from '../../context/SnakeContext'
