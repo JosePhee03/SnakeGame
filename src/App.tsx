@@ -1,6 +1,6 @@
-import { Arrow, ArrowBoard, GlobalStyle, Header, Main, Section } from './styles/styles'
+import { Arrow, ArrowBoard, GlobalStyle, Header, Logo, Main, Section } from './styles/styles'
 import CanvasSnake from './components/canvas/CanvasSnake'
-import { ArrowIcon } from './components/Icons'
+import { ArrowIcon, CrowLogo } from './components/Icons'
 import { useContext } from 'react'
 import SnakeContext, { SnakeContextType } from './context/SnakeContext'
 import useHandleMove from './hooks/usehandleMove'
@@ -24,7 +24,10 @@ function App (): JSX.Element {
         <Section>
           <ModalGame />
           <Header>
-            <h1>Snake</h1>
+            <Logo>
+              <CrowLogo />
+              <h1>Snake</h1>
+            </Logo>
           </Header>
           <CanvasSnake />
           <ArrowBoard>
