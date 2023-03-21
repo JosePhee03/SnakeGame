@@ -1,10 +1,11 @@
-import { Arrow, ArrowBoard, GlobalStyle, Header, Logo, Main, Section } from './styles/styles'
+import { Arrow, ArrowBoard, GlobalStyle, Main, Section } from './styles/styles'
 import CanvasSnake from './components/canvas/CanvasSnake'
-import { ArrowIcon, CrowLogo } from './components/Icons'
+import { ArrowIcon } from './components/Icons'
 import { useContext } from 'react'
 import SnakeContext, { SnakeContextType } from './context/SnakeContext'
 import useHandleMove from './hooks/usehandleMove'
 import styled from 'styled-components'
+import HeaderMenu from './components/HeaderMenu'
 
 function App (): JSX.Element {
   const { Snake, dispatch } = useContext(SnakeContext) as SnakeContextType
@@ -16,12 +17,7 @@ function App (): JSX.Element {
       <GlobalStyle />
       <Main>
         <Section>
-          <Header>
-            <Logo>
-              <CrowLogo />
-              <h1>Snake</h1>
-            </Logo>
-          </Header>
+          <HeaderMenu />
           <CanvasSnake />
           <ArrowBoard>
             <Arrow onClick={() => pressArrow('ArrowUp')}><ArrowIcon direction='ArrowUp' /></Arrow>
