@@ -4,25 +4,18 @@ import { ArrowIcon, CrowLogo } from './components/Icons'
 import { useContext } from 'react'
 import SnakeContext, { SnakeContextType } from './context/SnakeContext'
 import useHandleMove from './hooks/usehandleMove'
-import ModalGame from './components/ModalGame'
+import styled from 'styled-components'
 
 function App (): JSX.Element {
   const { Snake, dispatch } = useContext(SnakeContext) as SnakeContextType
   const { body } = Snake
-  const { snakeX, snakeY } = body[0]
   const { pressArrow } = useHandleMove(body, dispatch)
-
-  if (snakeX < 0 || snakeX > 352 || snakeY < 0 || snakeY > 352) {
-    console.log('Game Over')
-    dispatch({ type: 'RESET', payload: null })
-  }
 
   return (
     <>
       <GlobalStyle />
       <Main>
         <Section>
-          <ModalGame />
           <Header>
             <Logo>
               <CrowLogo />
@@ -37,9 +30,21 @@ function App (): JSX.Element {
             <Arrow onClick={() => pressArrow('ArrowRight')}><ArrowIcon direction='ArrowRight' /></Arrow>
           </ArrowBoard>
         </Section>
+        <Footer>
+          <h5>Status: {Snake.status}</h5>
+          <h5>Body: {Snake.body.length}</h5>
+          <h5>Direction: {Snake.direction}</h5>
+        </Footer>
       </Main>
     </>
   )
 }
 
 export default App
+
+const Footer = styled.footer`
+  position: absolute;
+  top: 0;
+  right: 30px;
+  background: #ccc;
+`
