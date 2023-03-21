@@ -21,7 +21,7 @@ function ArrowIcon ({ direction }: DirectionType): JSX.Element {
       <path
         d='M25.3333 15.9999L16 6.66658L6.66663 15.9999M16 6.66658L16 25.3333'
         stroke='white'
-        stroke-width='5'
+        strokeWidth='5'
       />
     </Svg>
   )
