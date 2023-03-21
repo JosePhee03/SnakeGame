@@ -1,25 +1,14 @@
 import { useEffect } from 'react'
 import { ActionType } from '../context/SnakeReducer'
-import { BodyType, KeyTypes } from '../types/types'
-import AddBody from '../components/addBody'
-import moveSnake from '../components/moveSnake'
+import { KeyTypes } from '../types/types'
 
 interface pressArrowType {
   pressArrow: (key: KeyTypes) => void
 }
 
-function useHandleMove (body: BodyType, dispatch: React.Dispatch<ActionType>): pressArrowType {
-  const { snakeX, snakeY } = body[0]
-
+function useHandleMove (direction: KeyTypes | null, dispatch: React.Dispatch<ActionType>): pressArrowType {
   const pressArrow = (key: KeyTypes): void => {
-    const { newBody, newSnakeHead } = moveSnake(key, body)
-    const newSnakeX = newSnakeHead.snakeX
-    const newSnakeY = newSnakeHead.snakeY
-    if (newSnakeX === 320 && newSnakeY === 320) {
-      const addBody = AddBody(newBody)
-      return dispatch({ type: 'MOVE', payload: addBody })
-    }
-    dispatch({ type: 'MOVE', payload: newBody })
+    dispatch({ type: 'ARROW', payload: key })
   }
 
   const keyPressEvent = (event: KeyboardEvent): void => {
@@ -36,7 +25,7 @@ function useHandleMove (body: BodyType, dispatch: React.Dispatch<ActionType>): p
     return () => {
       window.removeEventListener('keydown', keyPressEvent)
     }
-  }, [snakeX, snakeY])
+  }, [direction])
 
   return { pressArrow }
 }

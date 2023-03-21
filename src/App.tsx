@@ -9,8 +9,8 @@ import HeaderMenu from './components/HeaderMenu'
 
 function App (): JSX.Element {
   const { Snake, dispatch } = useContext(SnakeContext) as SnakeContextType
-  const { body } = Snake
-  const { pressArrow } = useHandleMove(body, dispatch)
+  const { direction } = Snake
+  const { pressArrow } = useHandleMove(direction, dispatch)
 
   return (
     <>

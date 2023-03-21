@@ -1,8 +1,9 @@
-import { BodyType, SnakeType } from '../types/types'
+import { BodyType, SnakeType, KeyTypes } from '../types/types'
 import { INITIAL_VALUE } from './SnakeProvider'
 
 export type ActionType =
  | { type: 'MOVE' | 'ADD', payload: BodyType }
+ | { type: 'ARROW', payload: KeyTypes }
  | { type: 'START' }
  | { type: 'RESET' }
  | { type: 'GAME_OVER' }
@@ -13,6 +14,11 @@ function SnakeReducer (state: SnakeType, action: ActionType): SnakeType {
       return {
         ...state,
         body: action.payload
+      }
+    case 'ARROW':
+      return {
+        ...state,
+        direction: action.payload
       }
     case 'START':
       return {
