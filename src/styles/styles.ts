@@ -97,15 +97,17 @@ export const Canvas = styled.div`
 `
 
 export const Header = styled.header`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
   height: 60px;
+  display: flex;
+  padding: 0 20px;
+  justify-content: space-between;
+  align-items: center;
 
-  h1 {
-    font-family: 'Lobster', cursive;
-    font-size: 30px;
+  h4 {
+    color: white;
   }
+
 `
 
 export const Logo = styled.div`
@@ -117,6 +119,8 @@ export const Logo = styled.div`
 
   h1 {
     color: white;
+    font-family: 'Lobster', cursive;
+    font-size: 30px;
     transform: translateY(-15px);
     text-shadow: 0 0 10px white;
   }
@@ -145,5 +149,6 @@ export const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
   }
 `
