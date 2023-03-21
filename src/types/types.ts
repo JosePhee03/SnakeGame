@@ -4,7 +4,7 @@ export type KeyTypes =
   | 'ArrowLeft'
   | 'ArrowRight'
 
-export type StatusType = 'START' | 'PAUSE'
+export type StatusType = 'START' | 'PAUSE' | 'GAME_OVER'
 
 export interface DirectionType {
   direction: KeyTypes
