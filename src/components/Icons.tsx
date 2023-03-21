@@ -1,3 +1,4 @@
+import { Svg } from '../styles/styles'
 import { DirectionType } from '../types/types'
 
 function ArrowIcon ({ direction }: DirectionType): JSX.Element {
@@ -6,25 +7,30 @@ function ArrowIcon ({ direction }: DirectionType): JSX.Element {
     ArrowDown: -180,
     ArrowLeft: -90,
     ArrowRight: 90
-  }
+  }[direction]
 
   return (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
+    <Svg
+      width='32'
+      height='32'
+      viewBox='0 0 32 32'
       fill='none'
-      stroke='currentColor'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-      strokeWidth='2'
-      viewBox='0 0 24 24'
-      transform={`rotate(${DIRECTIONS[direction]})`}
+      xmlns='http://www.3.org/2000/svg'
+      transform={`rotate(${DIRECTIONS})`}
     >
-      <path d='M12 19L12 5' />
-      <path d='M5 12L12 5 19 12' />
-    </svg>
+      <path
+        d='M25.3333 15.9999L16 6.66658L6.66663 15.9999M16 6.66658L16 25.3333'
+        stroke='white'
+        stroke-width='5'
+      />
+    </Svg>
   )
 }
 
-export { ArrowIcon }
+function CrowLogo (): JSX.Element {
+  return (
+    <img src='/crown-logo.png' alt='' />
+  )
+}
+
+export { ArrowIcon, CrowLogo }
