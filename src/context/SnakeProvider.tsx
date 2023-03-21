@@ -7,7 +7,7 @@ interface providerProps {
   children: JSX.Element | JSX.Element[]
 }
 
-export const INITIAL_VALUE: SnakeType = { status: 'START', body: [{ snakeX: 0, snakeY: 0 }], direction: 'ArrowRight' }
+export const INITIAL_VALUE: SnakeType = { status: null, body: [{ snakeX: 0, snakeY: 0 }], direction: null }
 
 function SnakeProvider ({ children }: providerProps): JSX.Element {
   const [Snake, dispatch] = useReducer(SnakeReducer, INITIAL_VALUE)
