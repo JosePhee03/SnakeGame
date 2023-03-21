@@ -8,7 +8,7 @@ function ModalGame ({ status, handleStart }: { status: StatusType | null, handle
         ? 'Start Game'
         : status === 'GAME_OVER'
           ? 'GameOver'
-          : ''}
+          : 'Start Game'}
       </h2>
       <ButtonGame onClick={handleStart}>Start</ButtonGame>
     </Modal>
