@@ -1,12 +1,12 @@
+import { ClearLocalStorage, GetLocalStorage, SetLocalStorage } from '../helpers/localStorage'
 import { BodyType, SnakeType, KeyTypes } from '../types/types'
-import { INITIAL_VALUE } from './SnakeProvider'
 
 export type ActionType =
  | { type: 'MOVE' | 'ADD', payload: BodyType }
  | { type: 'ARROW', payload: KeyTypes }
+ | { type: 'PAUSE', payload: SnakeType }
+ | { type: 'RESET' | 'GAME_OVER' }
  | { type: 'START' }
- | { type: 'RESET' }
- | { type: 'GAME_OVER' }
 
 function SnakeReducer (state: SnakeType, action: ActionType): SnakeType {
   switch (action.type) {
@@ -20,27 +20,33 @@ function SnakeReducer (state: SnakeType, action: ActionType): SnakeType {
         ...state,
         direction: action.payload
       }
-    case 'START':
+    case 'PAUSE':
+      SetLocalStorage('SNAKE', action.payload)
       return {
         ...state,
-        status: 'START',
-        body: [{ snakeX: 0, snakeY: 0 }],
-        direction: 'ArrowRight'
+        status: 'PAUSE',
+        direction: null
       }
+    case 'START':
+      return GetLocalStorage('SNAKE')
     case 'ADD':
       return {
         ...state,
         body: action.payload
       }
     case 'GAME_OVER':
+      ClearLocalStorage('SNAKE')
       return {
         ...state,
         status: 'GAME_OVER',
-        body: [{ snakeX: 0, snakeY: 0 }],
         direction: null
       }
     case 'RESET':
-      return INITIAL_VALUE
+      return {
+        status: 'START',
+        body: [{ snakeX: 0, snakeY: 0 }],
+        direction: 'ArrowRight'
+      }
     default:
       return state
   }
