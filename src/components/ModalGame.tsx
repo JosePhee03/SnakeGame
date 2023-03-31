@@ -1,16 +1,19 @@
 import { ButtonGame, Modal } from '../styles/styles'
 import { StatusType } from '../types/types'
 
-function ModalGame ({ status, handleStart }: { status: StatusType | null, handleStart: () => void }): JSX.Element {
+function ModalGame ({ status, handleButton }: { status: StatusType | null, handleButton: () => void }): JSX.Element {
+  const STATUS = {
+    GAME_OVER: 'Game Over',
+    PAUSE: 'Pause',
+    START: ''
+  }
+
   return (
     <Modal>
-      <h2>{status === 'START'
-        ? 'Start Game'
-        : status === 'GAME_OVER'
-          ? 'GameOver'
-          : 'Start Game'}
+      <h2>
+        {status === null ? 'Press Start' : STATUS[status]}
       </h2>
-      <ButtonGame onClick={handleStart}>Start</ButtonGame>
+      <ButtonGame onClick={handleButton}>Start</ButtonGame>
     </Modal>
   )
 }
