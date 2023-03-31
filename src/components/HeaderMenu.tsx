@@ -1,30 +1,19 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import styled from 'styled-components'
 import SnakeContext, { SnakeContextType } from '../context/SnakeContext'
 import { Logo, Header } from '../styles/styles'
 import { CrownLogo, Pause } from './Icons'
-import moveSnake from './moveSnake'
-import useAddBody from '../hooks/useAddBody'
 
 function HeaderMenu (): JSX.Element {
   const { Snake, dispatch } = useContext(SnakeContext) as SnakeContextType
-  const { body, direction } = Snake
-  useAddBody(body, dispatch)
-
-  let moveInterval: NodeJS.Timer
-  useEffect(() => {
-    if (direction !== null) {
-      moveInterval = setInterval(() => {
-        const { newBody } = moveSnake(direction, body)
-        dispatch({ type: 'MOVE', payload: newBody })
-        console.log(direction)
-      }, 200)
-    }
-    return () => clearInterval(moveInterval)
-  }, [body])
+  const { body } = Snake
 
   const score = body.length - 1
   const padScore = score.toString().padStart(3, '000')
+
+  const handlePause = (): void => {
+    dispatch({ type: 'PAUSE', payload: Snake })
+  }
 
   return (
     <Header>
@@ -36,7 +25,7 @@ function HeaderMenu (): JSX.Element {
         <CrownLogo />
         <h1>Snake</h1>
       </Logo>
-      <HeaderButton>
+      <HeaderButton onClick={handlePause}>
         <Pause />
       </HeaderButton>
     </Header>
