@@ -38,13 +38,14 @@ function CanvasSnake (): JSX.Element {
   return (
     <>
       <Canvas>
-        {body.map((coord, index) => (
-          <SnakeHead
-            key={index}
-            snakeX={coord.snakeX}
-            snakeY={coord.snakeY}
-          />
-        ))}
+        {status === 'START'
+          ? body.map((coord, index) => (
+            <SnakeHead
+              key={index}
+              snakeX={coord.snakeX}
+              snakeY={coord.snakeY}
+            />))
+          : <ModalGame handleButton={handleButton} status={status} />}
         {status !== 'START' && <ModalGame status={status} handleButton={handleButton} />}
       </Canvas>
     </>
