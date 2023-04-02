@@ -33,7 +33,7 @@ function CrownLogo (): JSX.Element {
   )
 }
 
-function Play (): JSX.Element {
+function PlayIcon (): JSX.Element {
   return (
     <Svg
       xmlns='http://www.w3.org/2000/svg'
@@ -50,7 +50,7 @@ function Play (): JSX.Element {
   )
 }
 
-function Pause (): JSX.Element {
+function PauseIcon (): JSX.Element {
   return (
     <Svg
       xmlns='http://www.w3.org/2000/svg'
@@ -67,4 +67,4 @@ function Pause (): JSX.Element {
   )
 }
 
-export { ArrowIcon, CrownLogo, Play, Pause }
+export { ArrowIcon, CrownLogo, PlayIcon, PauseIcon }
