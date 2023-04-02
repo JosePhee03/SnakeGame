@@ -1,12 +1,11 @@
 import { BodyType, KeyTypes, SnakeCoords } from '../types/types'
 import { snakeHead } from './snakeHead'
 
-interface NewSnake {
+interface NewBody {
   newBody: SnakeCoords[]
-  newSnakeHead: SnakeCoords
 }
 
-function moveSnake (key: KeyTypes, body: BodyType): NewSnake {
+function moveSnake (key: KeyTypes, body: BodyType): NewBody {
   const newSnakeHead = snakeHead(body, key)
   const newBody = body.map((_, index, arr) =>
     index === 0
@@ -14,7 +13,7 @@ function moveSnake (key: KeyTypes, body: BodyType): NewSnake {
       : arr[index - 1]
   )
 
-  return { newBody, newSnakeHead }
+  return { newBody }
 }
 
 export default moveSnake
