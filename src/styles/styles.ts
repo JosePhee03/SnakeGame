@@ -104,6 +104,10 @@ export const Header = styled.header`
   justify-content: space-between;
   align-items: center;
 
+  div:nth-child(n){
+    width: calc(100% / 3);
+  }
+
   h4 {
     color: white;
   }
