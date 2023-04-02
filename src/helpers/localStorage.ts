@@ -7,9 +7,9 @@ export function SetLocalStorage (item: ItemType, snake: SnakeType): void {
   window.localStorage.setItem(item, JSON.stringify(snake))
 }
 
-export function GetLocalStorage (item: ItemType): SnakeType {
+export function GetLocalStorage (item: ItemType): SnakeType | null {
   const getItem = window.localStorage.getItem(item)
-  return JSON.parse(getItem as string)
+  return getItem !== null ? JSON.parse(getItem) : null
 }
 
 export function ClearLocalStorage (item: ItemType): void {
