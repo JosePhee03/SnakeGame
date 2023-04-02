@@ -1,5 +1,5 @@
 import { Arrow, ArrowBoard, GlobalStyle, Main, Section } from './styles/styles'
-import CanvasSnake from './components/canvas/CanvasSnake'
+import CanvasSnake from './components/CanvasSnake'
 import { ArrowIcon } from './components/Icons'
 import { useContext } from 'react'
 import SnakeContext, { SnakeContextType } from './context/SnakeContext'
