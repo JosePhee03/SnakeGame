@@ -20,15 +20,24 @@ function SnakeReducer (state: SnakeType, action: ActionType): SnakeType {
         ...state,
         direction: action.payload
       }
-    case 'PAUSE':
-      SetLocalStorage('SNAKE', action.payload)
-      return {
-        ...state,
+    case 'PAUSE': {
+      const saveSnake: SnakeType = {
         status: 'PAUSE',
-        direction: null
+        body: action.payload.body,
+        direction: action.payload.direction
       }
-    case 'START':
-      return GetLocalStorage('SNAKE')
+      SetLocalStorage('SNAKE', saveSnake)
+      return saveSnake
+    }
+    case 'START': {
+      const localSnake = GetLocalStorage('SNAKE') as SnakeType
+      ClearLocalStorage('SNAKE')
+      return {
+        status: 'START',
+        body: localSnake.body,
+        direction: localSnake.direction
+      }
+    }
     case 'ADD':
       return {
         ...state,
@@ -38,8 +47,7 @@ function SnakeReducer (state: SnakeType, action: ActionType): SnakeType {
       ClearLocalStorage('SNAKE')
       return {
         ...state,
-        status: 'GAME_OVER',
-        direction: null
+        status: 'GAME_OVER'
       }
     case 'RESET':
       return {
