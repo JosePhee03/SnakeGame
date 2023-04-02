@@ -2,11 +2,11 @@ import { useContext } from 'react'
 import styled from 'styled-components'
 import SnakeContext, { SnakeContextType } from '../context/SnakeContext'
 import { Logo, Header } from '../styles/styles'
-import { CrownLogo, Pause } from './Icons'
+import { CrownLogo, PauseIcon } from './Icons'
 
 function HeaderMenu (): JSX.Element {
   const { Snake, dispatch } = useContext(SnakeContext) as SnakeContextType
-  const { body } = Snake
+  const { body, status } = Snake
 
   const score = body.length - 1
   const padScore = score.toString().padStart(3, '000')
@@ -18,15 +18,20 @@ function HeaderMenu (): JSX.Element {
   return (
     <Header>
       <Score>
-        <h6>Score</h6>
-        <h5>{padScore}</h5>
+        <div>
+          <h6>Score</h6>
+          <h5>{padScore}</h5>
+        </div>
       </Score>
       <Logo>
         <CrownLogo />
         <h1>Snake</h1>
       </Logo>
-      <HeaderButton onClick={handlePause}>
-        <Pause />
+      <HeaderButton>
+        {status === 'START' &&
+          <button onClick={handlePause}>
+            <PauseIcon />
+          </button>}
       </HeaderButton>
     </Header>
   )
@@ -36,32 +41,39 @@ export default HeaderMenu
 
 const Score = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  text-shadow: 0 0 4px white;
-  font-family: 'Press Start 2P', cursive;
-  align-self: stretch;
-
+  padding-left: 20px;
+  
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-shadow: 0 0 4px white;
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+  }
+  
   h6 {
     font-size: 12px;
   }
-
+  
   h5 {
     font-size: 16px;
   }
 `
 
-const HeaderButton = styled.button`
-  background: none;
-  border: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 5px;
+const HeaderButton = styled.div`
+  display: flex;
+  justify-content: end;
 
-  :hover {
-    cursor: pointer;
-    background: #ffffff50;
+  button {
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 5px;
+    :hover {
+      cursor: pointer;
+      background: #ffffff50;
+    }
   }
 `
