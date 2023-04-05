@@ -20,8 +20,6 @@ function useHandleMove (direction: KeyTypes | null, dispatch: React.Dispatch<Act
 
   useEffect(() => {
     window.addEventListener('keydown', keyPressEvent)
-    console.log('render')
-
     return () => {
       window.removeEventListener('keydown', keyPressEvent)
     }
