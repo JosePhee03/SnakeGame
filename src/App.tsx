@@ -6,11 +6,18 @@ import SnakeContext, { SnakeContextType } from './context/SnakeContext'
 import useHandleMove from './hooks/usehandleMove'
 import styled from 'styled-components'
 import HeaderMenu from './components/HeaderMenu'
+import ModalGame from './components/ModalGame'
 
 function App (): JSX.Element {
   const { Snake, dispatch } = useContext(SnakeContext) as SnakeContextType
-  const { direction } = Snake
+  const { direction, status } = Snake
   const { pressArrow } = useHandleMove(direction, dispatch)
+
+  const handleButton = (): void => {
+    status === 'PAUSE'
+      ? dispatch({ type: 'START' })
+      : dispatch({ type: 'RESET' })
+  }
 
   return (
     <>
@@ -19,6 +26,7 @@ function App (): JSX.Element {
         <Section>
           <HeaderMenu />
           <CanvasSnake />
+          {status !== 'START' && <ModalGame status={status} handleButton={handleButton} />}
           <ArrowBoard>
             <Arrow onClick={() => pressArrow('ArrowUp')}><ArrowIcon direction='ArrowUp' /></Arrow>
             <Arrow onClick={() => pressArrow('ArrowDown')}><ArrowIcon direction='ArrowDown' /></Arrow>
@@ -30,6 +38,7 @@ function App (): JSX.Element {
           <h5>Status: {Snake.status}</h5>
           <h5>Body: {Snake.body.length}</h5>
           <h5>Direction: {Snake.direction}</h5>
+          <h5>SnakeX: {Snake.body[0].snakeX} <span>SnakeY: {Snake.body[0].snakeY}</span></h5>
         </Footer>
       </Main>
     </>
