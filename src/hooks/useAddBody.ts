@@ -1,17 +1,31 @@
-import { useEffect } from 'react'
-import { ActionType } from '../context/SnakeReducer'
-import { BodyType } from '../types/types'
+import { useCallback, useState } from 'react'
 
-function useAddBody (body: BodyType, dispatch: React.Dispatch<ActionType>): void {
-  const { snakeX, snakeY } = body[0]
+export interface FoodType { foodX: number, foodY: number }
 
-  useEffect(() => {
-    const newBody = [...body]
-    newBody.push({ snakeX: -30, snakeY: -30 })
-    if (snakeX === 320 && snakeY === 320) {
-      dispatch({ type: 'ADD', payload: newBody })
-    }
-  }, [snakeX, snakeY])
+interface ReturnType {
+  food: FoodType
+  GenerateNewFood: () => void
+}
+
+function useAddBody (): ReturnType {
+  const RandomNumber = (): number => Math.round(Math.random() * 11) * 32
+
+  console.log('render food')
+
+  const foodCoords = useCallback((): FoodType => {
+    console.log('render callback')
+    const foodX = RandomNumber()
+    const foodY = RandomNumber()
+    return { foodX, foodY }
+  }, [])
+
+  const [food, setFood] = useState(foodCoords)
+
+  const GenerateNewFood = (): void => {
+    setFood(foodCoords)
+  }
+
+  return { food, GenerateNewFood }
 }
 
 export default useAddBody
