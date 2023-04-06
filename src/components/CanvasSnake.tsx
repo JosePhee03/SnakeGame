@@ -12,26 +12,24 @@ function CanvasSnake (): JSX.Element {
   const { food, GenerateNewFood } = useAddBody()
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  let moveInterval: NodeJS.Timer
   useEffect(() => {
+    let moveInterval: NodeJS.Timer
     if (status === 'START') {
       moveInterval = setInterval(() => {
         const { newBody } = moveSnake(direction as KeyTypes, body)
+
         dispatch({ type: 'MOVE', payload: newBody })
         if (snakeX < 0 || snakeX > 352 || snakeY < 0 || snakeY > 352) {
           dispatch({ type: 'GAME_OVER' })
         } else if (food.foodX === newBody[0].snakeX && food.foodY === newBody[0].snakeY) {
-          const newSnake = [...body]
+          const newSnake = [...newBody]
           newSnake.push({ snakeX: -32, snakeY: -32 })
           dispatch({ type: 'ADD', payload: newSnake })
           GenerateNewFood()
         }
       }, 200)
     }
-    return () => clearInterval(moveInterval)
-  }, [body])
 
-  useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement
     const context = canvas.getContext('2d') as CanvasRenderingContext2D
 
@@ -44,7 +42,10 @@ function CanvasSnake (): JSX.Element {
     body.map(({ snakeX, snakeY }) => drawSquare(snakeX, snakeY, 'red'))
     console.log('canvas')
 
-    return () => context.clearRect(0, 0, 384, 384)
+    return (): void => {
+      clearInterval(moveInterval)
+      context.clearRect(0, 0, 384, 384)
+    }
   }, [body])
 
   return (
