@@ -1,9 +1,8 @@
-import { Canvas, SnakeHead } from '../styles/styles'
-import { useContext, useEffect, useMemo } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import SnakeContext, { SnakeContextType } from '../context/SnakeContext'
 import moveSnake from './moveSnake'
 import useAddBody from '../hooks/useAddBody'
-import { FoodType, KeyTypes } from '../types/types'
+import { KeyTypes } from '../types/types'
 import styled from 'styled-components'
 
 function CanvasSnake (): JSX.Element {
@@ -11,6 +10,7 @@ function CanvasSnake (): JSX.Element {
   const { body, status, direction } = Snake
   const { snakeX, snakeY } = body[0]
   const { food, GenerateNewFood } = useAddBody()
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   let moveInterval: NodeJS.Timer
   useEffect(() => {
@@ -31,34 +31,32 @@ function CanvasSnake (): JSX.Element {
     return () => clearInterval(moveInterval)
   }, [body])
 
-  const memoFood = useMemo(() => <Food foodX={food.foodX} foodY={food.foodY} />, [food])
+  useEffect(() => {
+    const canvas = canvasRef.current as HTMLCanvasElement
+    const context = canvas.getContext('2d') as CanvasRenderingContext2D
+
+    const drawSquare = (x: number, y: number, color: string): void => {
+      context.fillStyle = color
+      context.fillRect(x, y, 32, 32)
+    }
+
+    drawSquare(food.foodX, food.foodY, 'pink')
+    body.map(({ snakeX, snakeY }) => drawSquare(snakeX, snakeY, 'red'))
+    console.log('canvas')
+
+    return () => context.clearRect(0, 0, 384, 384)
+  }, [body])
 
   return (
     <>
-      <Canvas>
-        {status === 'START' &&
-          <>
-            {memoFood}
-            {body.map((coord, index) => (
-              <SnakeHead
-                key={index}
-                snakeX={coord.snakeX}
-                snakeY={coord.snakeY}
-              />))}
-          </>}
-      </Canvas>
+      <Canvas ref={canvasRef} width={384} height={384} />
     </>
   )
 }
 
 export default CanvasSnake
 
-const Food = styled.div<FoodType>`
-  width: ${32}px;
-  height: ${32}px;
-  position: absolute;
-  top: ${props => props.foodY}px;
-  left: ${props => props.foodX}px;
-  background: yellow;
-  filter: drop-shadow(0 0 4px yellow);
+export const Canvas = styled.canvas`
+  background-image: url(/pattern.svg);
+  box-shadow: inset 0 0 10px #ffffff40;
 `
