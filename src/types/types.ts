@@ -19,3 +19,5 @@ export interface SnakeType {
   body: BodyType
   direction: KeyTypes | null
 }
+
+export interface FoodType { foodX: number, foodY: number }
