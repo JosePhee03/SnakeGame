@@ -85,17 +85,6 @@ export const ArrowBoard = styled.div`
   display: flex;
 `
 
-export const Canvas = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: calc(${snakeSize}*12px);
-  height: calc(${snakeSize}*12px);
-  position: relative;
-  background-image: url(/pattern.svg);
-  box-shadow: inset 0 0 10px #ffffff40;
-`
-
 export const Header = styled.header`
   width: 100%;
   height: 60px;
