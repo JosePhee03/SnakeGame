@@ -1,9 +1,9 @@
 import { Canvas, SnakeHead } from '../styles/styles'
-import { memo, useContext, useEffect } from 'react'
+import { useContext, useEffect, useMemo } from 'react'
 import SnakeContext, { SnakeContextType } from '../context/SnakeContext'
 import moveSnake from './moveSnake'
-import useAddBody, { FoodType } from '../hooks/useAddBody'
-import { KeyTypes } from '../types/types'
+import useAddBody from '../hooks/useAddBody'
+import { FoodType, KeyTypes } from '../types/types'
 import styled from 'styled-components'
 
 function CanvasSnake (): JSX.Element {
@@ -18,7 +18,9 @@ function CanvasSnake (): JSX.Element {
       moveInterval = setInterval(() => {
         const { newBody } = moveSnake(direction as KeyTypes, body)
         dispatch({ type: 'MOVE', payload: newBody })
-        if (food.foodX === newBody[0].snakeX && food.foodY === newBody[0].snakeY) {
+        if (snakeX < 0 || snakeX > 352 || snakeY < 0 || snakeY > 352) {
+          dispatch({ type: 'GAME_OVER' })
+        } else if (food.foodX === newBody[0].snakeX && food.foodY === newBody[0].snakeY) {
           const newSnake = [...body]
           newSnake.push({ snakeX: -32, snakeY: -32 })
           dispatch({ type: 'ADD', payload: newSnake })
@@ -29,16 +31,14 @@ function CanvasSnake (): JSX.Element {
     return () => clearInterval(moveInterval)
   }, [body])
 
-  if (snakeX < 0 || snakeX > 352 || snakeY < 0 || snakeY > 352) {
-    dispatch({ type: 'GAME_OVER' })
-  }
+  const memoFood = useMemo(() => <Food foodX={food.foodX} foodY={food.foodY} />, [food])
 
   return (
     <>
       <Canvas>
         {status === 'START' &&
           <>
-            <Food foodX={food.foodX} foodY={food.foodY} />
+            {memoFood}
             {body.map((coord, index) => (
               <SnakeHead
                 key={index}
@@ -51,7 +51,7 @@ function CanvasSnake (): JSX.Element {
   )
 }
 
-export default memo(CanvasSnake)
+export default CanvasSnake
 
 const Food = styled.div<FoodType>`
   width: ${32}px;
