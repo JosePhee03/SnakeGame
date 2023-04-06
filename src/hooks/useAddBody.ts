@@ -1,30 +1,15 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
+import { FoodType } from '../types/types'
+import { ramdomFood } from '../helpers/randomNumberFood'
 
-export interface FoodType { foodX: number, foodY: number }
-
-interface ReturnType {
+interface ReturnFood {
   food: FoodType
   GenerateNewFood: () => void
 }
 
-function useAddBody (): ReturnType {
-  const RandomNumber = (): number => Math.round(Math.random() * 11) * 32
-
-  console.log('render food')
-
-  const foodCoords = useCallback((): FoodType => {
-    console.log('render callback')
-    const foodX = RandomNumber()
-    const foodY = RandomNumber()
-    return { foodX, foodY }
-  }, [])
-
-  const [food, setFood] = useState(foodCoords)
-
-  const GenerateNewFood = (): void => {
-    setFood(foodCoords)
-  }
-
+function useAddBody (): ReturnFood {
+  const [food, setFood] = useState(ramdomFood)
+  const GenerateNewFood = (): void => setFood(ramdomFood)
   return { food, GenerateNewFood }
 }
 
