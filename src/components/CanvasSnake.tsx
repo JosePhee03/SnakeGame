@@ -4,11 +4,11 @@ import moveSnake from './moveSnake'
 import useAddBody from '../hooks/useAddBody'
 import { KeyTypes } from '../types/types'
 import styled from 'styled-components'
+import { CollisionFoodWithSnake, CollisionFoodWithSnakeHead, CollisionSnakeHeadWithBorder, CollisionSnakeWithHead } from './Collisions'
 
 function CanvasSnake (): JSX.Element {
   const { Snake, dispatch } = useContext(SnakeContext) as SnakeContextType
   const { body, status, direction } = Snake
-  const { snakeX, snakeY } = body[0]
   const { food, GenerateNewFood } = useAddBody()
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -17,16 +17,16 @@ function CanvasSnake (): JSX.Element {
     if (status === 'START') {
       moveInterval = setInterval(() => {
         const { newBody } = moveSnake(direction as KeyTypes, body)
-
         dispatch({ type: 'MOVE', payload: newBody })
-        if (snakeX < 0 || snakeX > 352 || snakeY < 0 || snakeY > 352) {
+        if (CollisionSnakeHeadWithBorder(newBody) || CollisionSnakeWithHead(newBody)) {
           dispatch({ type: 'GAME_OVER' })
-        } else if (food.foodX === newBody[0].snakeX && food.foodY === newBody[0].snakeY) {
+        } else if (CollisionFoodWithSnakeHead(newBody, food)) {
           const newSnake = [...newBody]
           newSnake.push({ snakeX: -32, snakeY: -32 })
           dispatch({ type: 'ADD', payload: newSnake })
           GenerateNewFood()
         }
+        if (CollisionFoodWithSnake(newBody, food)) return GenerateNewFood()
       }, 200)
     }
 
@@ -35,10 +35,11 @@ function CanvasSnake (): JSX.Element {
 
     const drawSquare = (x: number, y: number, color: string): void => {
       context.fillStyle = color
+      context.filter = `drop-shadow(0 0 4px ${color})`
       context.fillRect(x, y, 32, 32)
     }
 
-    drawSquare(food.foodX, food.foodY, 'pink')
+    drawSquare(food.foodX, food.foodY, 'yellow')
     body.map(({ snakeX, snakeY }) => drawSquare(snakeX, snakeY, 'red'))
     console.log('canvas')
 
