@@ -1,19 +1,18 @@
-import { useContext } from 'react'
 import styled from 'styled-components'
-import SnakeContext, { SnakeContextType } from '../context/SnakeContext'
 import { Logo, Header } from '../styles/styles'
 import { CrownLogo, PauseIcon } from './Icons'
+import { SnakeType } from '../types/types'
 
-function HeaderMenu (): JSX.Element {
-  const { Snake, dispatch } = useContext(SnakeContext) as SnakeContextType
+interface Props {
+  Snake: SnakeType
+  handlePause: () => void
+}
+
+function HeaderMenu ({ Snake, handlePause }: Props): JSX.Element {
   const { body, status } = Snake
 
   const score = body.length - 1
   const padScore = score.toString().padStart(3, '000')
-
-  const handlePause = (): void => {
-    dispatch({ type: 'PAUSE', payload: Snake })
-  }
 
   return (
     <Header>

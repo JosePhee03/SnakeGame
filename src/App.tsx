@@ -13,6 +13,10 @@ function App (): JSX.Element {
   const { direction, status } = Snake
   const { pressArrow } = useHandleMove(direction, dispatch)
 
+  const handlePause = (): void => {
+    dispatch({ type: 'PAUSE', payload: Snake })
+  }
+
   const handleButton = (): void => {
     status === 'PAUSE'
       ? dispatch({ type: 'START' })
@@ -24,7 +28,7 @@ function App (): JSX.Element {
       <GlobalStyle />
       <Main>
         <Section>
-          <HeaderMenu />
+          <HeaderMenu Snake={Snake} handlePause={handlePause} />
           <CanvasSnake />
           {status !== 'START' && <ModalGame status={status} handleButton={handleButton} />}
           <ArrowBoard>
@@ -39,6 +43,7 @@ function App (): JSX.Element {
           <h5>Body: {Snake.body.length}</h5>
           <h5>Direction: {Snake.direction}</h5>
           <h5>SnakeX: {Snake.body[0].snakeX} <span>SnakeY: {Snake.body[0].snakeY}</span></h5>
+          <h5>food: {Snake.food.foodX}, {Snake.food.foodY}</h5>
         </Footer>
       </Main>
     </>

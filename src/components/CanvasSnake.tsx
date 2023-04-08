@@ -1,32 +1,20 @@
 import { useContext, useEffect, useRef } from 'react'
 import SnakeContext, { SnakeContextType } from '../context/SnakeContext'
 import moveSnake from './moveSnake'
-import useAddBody from '../hooks/useAddBody'
 import { KeyTypes } from '../types/types'
 import styled from 'styled-components'
-import { CollisionFoodWithSnake, CollisionFoodWithSnakeHead, CollisionSnakeHeadWithBorder, CollisionSnakeWithHead } from './Collisions'
 
 function CanvasSnake (): JSX.Element {
   const { Snake, dispatch } = useContext(SnakeContext) as SnakeContextType
-  const { body, status, direction } = Snake
-  const { food, GenerateNewFood } = useAddBody()
+  const { body, status, direction, food } = Snake
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
     let moveInterval: NodeJS.Timer
     if (status === 'START') {
       moveInterval = setInterval(() => {
-        const { newBody } = moveSnake(direction as KeyTypes, body)
-        dispatch({ type: 'MOVE', payload: newBody })
-        if (CollisionSnakeHeadWithBorder(newBody) || CollisionSnakeWithHead(newBody)) {
-          dispatch({ type: 'GAME_OVER' })
-        } else if (CollisionFoodWithSnakeHead(newBody, food)) {
-          const newSnake = [...newBody]
-          newSnake.push({ snakeX: -32, snakeY: -32 })
-          dispatch({ type: 'ADD', payload: newSnake })
-          GenerateNewFood()
-        }
-        if (CollisionFoodWithSnake(newBody, food)) return GenerateNewFood()
+        const { newBody, typeAction } = moveSnake(direction as KeyTypes, body, food)
+        dispatch({ type: typeAction, payload: newBody })
       }, 200)
     }
 
@@ -41,7 +29,6 @@ function CanvasSnake (): JSX.Element {
 
     drawSquare(food.foodX, food.foodY, 'yellow')
     body.map(({ snakeX, snakeY }) => drawSquare(snakeX, snakeY, 'red'))
-    console.log('canvas')
 
     return (): void => {
       clearInterval(moveInterval)

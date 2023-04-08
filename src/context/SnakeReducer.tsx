@@ -1,11 +1,12 @@
 import { ClearLocalStorage, GetLocalStorage, SetLocalStorage } from '../helpers/localStorage'
-import { BodyType, SnakeType, KeyTypes } from '../types/types'
+import { SnakeType, KeyTypes, BodyType } from '../types/types'
+import ramdomFood from '../helpers/randomFood'
 
 export type ActionType =
- | { type: 'MOVE' | 'ADD', payload: BodyType }
+ | { type: 'MOVE' | 'ADD' | 'GAME_OVER', payload: BodyType }
  | { type: 'ARROW', payload: KeyTypes }
  | { type: 'PAUSE', payload: SnakeType }
- | { type: 'RESET' | 'GAME_OVER' }
+ | { type: 'RESET' }
  | { type: 'START' }
 
 function SnakeReducer (state: SnakeType, action: ActionType): SnakeType {
@@ -22,6 +23,7 @@ function SnakeReducer (state: SnakeType, action: ActionType): SnakeType {
       }
     case 'PAUSE': {
       const saveSnake: SnakeType = {
+        ...state,
         status: 'PAUSE',
         body: action.payload.body,
         direction: action.payload.direction
@@ -33,6 +35,7 @@ function SnakeReducer (state: SnakeType, action: ActionType): SnakeType {
       const localSnake = GetLocalStorage('SNAKE') as SnakeType
       ClearLocalStorage('SNAKE')
       return {
+        ...state,
         status: 'START',
         body: localSnake.body,
         direction: localSnake.direction
@@ -41,16 +44,19 @@ function SnakeReducer (state: SnakeType, action: ActionType): SnakeType {
     case 'ADD':
       return {
         ...state,
-        body: action.payload
+        body: action.payload,
+        food: ramdomFood(action.payload)
       }
     case 'GAME_OVER':
       ClearLocalStorage('SNAKE')
       return {
         ...state,
-        status: 'GAME_OVER'
+        status: 'GAME_OVER',
+        body: action.payload
       }
     case 'RESET':
       return {
+        ...state,
         status: 'START',
         body: [{ snakeX: 0, snakeY: 0 }],
         direction: 'ArrowRight'
