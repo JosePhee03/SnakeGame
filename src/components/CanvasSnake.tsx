@@ -3,9 +3,10 @@ import SnakeContext, { SnakeContextType } from '../context/SnakeContext'
 import moveSnake from './moveSnake'
 import { KeyTypes } from '../types/types'
 import styled from 'styled-components'
+import { snakeEventDispatch } from '../context/SnakeProvider'
 
 function CanvasSnake (): JSX.Element {
-  const { Snake, dispatch } = useContext(SnakeContext) as SnakeContextType
+  const { Snake } = useContext(SnakeContext) as SnakeContextType
   const { body, status, direction, food } = Snake
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -13,8 +14,8 @@ function CanvasSnake (): JSX.Element {
     let moveInterval: NodeJS.Timer
     if (status === 'START') {
       moveInterval = setInterval(() => {
-        const { newBody, typeAction } = moveSnake(direction as KeyTypes, body, food)
-        dispatch({ type: typeAction, payload: newBody })
+        const { newBody, snakeEvents } = moveSnake(direction as KeyTypes, body, food)
+        snakeEventDispatch(snakeEvents, newBody)
       }, 200)
     }
 

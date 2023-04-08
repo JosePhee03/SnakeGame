@@ -7,21 +7,17 @@ import useHandleMove from './hooks/usehandleMove'
 import styled from 'styled-components'
 import HeaderMenu from './components/HeaderMenu'
 import ModalGame from './components/ModalGame'
+import { pauseGameDispatch, resetGameDispatch, startGameDispatch } from './context/SnakeProvider'
+import { KeyTypes, StatusGame } from './types/types'
 
 function App (): JSX.Element {
-  const { Snake, dispatch } = useContext(SnakeContext) as SnakeContextType
+  const { Snake } = useContext(SnakeContext) as SnakeContextType
   const { direction, status } = Snake
-  const { pressArrow } = useHandleMove(direction, dispatch)
+  const { pressArrow } = useHandleMove(direction)
 
-  const handlePause = (): void => {
-    dispatch({ type: 'PAUSE', payload: Snake })
-  }
+  const handlePause = (): void => pauseGameDispatch(Snake)
 
-  const handleButton = (): void => {
-    status === 'PAUSE'
-      ? dispatch({ type: 'START' })
-      : dispatch({ type: 'RESET' })
-  }
+  const handleButton = (): void => status === StatusGame.PAUSE ? startGameDispatch() : resetGameDispatch()
 
   return (
     <>
@@ -32,10 +28,10 @@ function App (): JSX.Element {
           <CanvasSnake />
           {status !== 'START' && <ModalGame status={status} handleButton={handleButton} />}
           <ArrowBoard>
-            <Arrow onClick={() => pressArrow('ArrowUp')}><ArrowIcon direction='ArrowUp' /></Arrow>
-            <Arrow onClick={() => pressArrow('ArrowDown')}><ArrowIcon direction='ArrowDown' /></Arrow>
-            <Arrow onClick={() => pressArrow('ArrowLeft')}><ArrowIcon direction='ArrowLeft' /></Arrow>
-            <Arrow onClick={() => pressArrow('ArrowRight')}><ArrowIcon direction='ArrowRight' /></Arrow>
+            <Arrow onClick={() => pressArrow(KeyTypes.ArrowUp)}><ArrowIcon direction={KeyTypes.ArrowUp} /></Arrow>
+            <Arrow onClick={() => pressArrow(KeyTypes.ArrowDown)}><ArrowIcon direction={KeyTypes.ArrowDown} /></Arrow>
+            <Arrow onClick={() => pressArrow(KeyTypes.ArrowLeft)}><ArrowIcon direction={KeyTypes.ArrowLeft} /></Arrow>
+            <Arrow onClick={() => pressArrow(KeyTypes.ArrowRight)}><ArrowIcon direction={KeyTypes.ArrowRight} /></Arrow>
           </ArrowBoard>
         </Section>
         <Footer>

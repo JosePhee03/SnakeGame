@@ -6,13 +6,13 @@ export function snakeHead (body: BodyType, key: KeyTypes): SnakeCoords {
   const { snakeX, snakeY } = snakeHead
 
   switch (key) {
-    case 'ArrowDown':
+    case KeyTypes.ArrowDown:
       return ({ snakeX, snakeY: snakeY + snakeSize })
-    case 'ArrowUp':
+    case KeyTypes.ArrowUp:
       return ({ snakeX, snakeY: snakeY - snakeSize })
-    case 'ArrowLeft':
+    case KeyTypes.ArrowLeft:
       return ({ snakeY, snakeX: snakeX - snakeSize })
-    case 'ArrowRight':
+    case KeyTypes.ArrowRight:
       return ({ snakeY, snakeX: snakeX + snakeSize })
   }
 }
