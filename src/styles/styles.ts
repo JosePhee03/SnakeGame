@@ -119,6 +119,11 @@ export const Logo = styled.div`
   }
 `
 
+export const Canvas = styled.canvas`
+  background-image: url(/pattern.svg);
+  box-shadow: inset 0 0 10px #ffffff40;
+`
+
 export const Main = styled.main`
   width: 100%;
   height: 100vh;
@@ -143,5 +148,43 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+`
+export const Score = styled.div`
+  display: flex;
+  padding-left: 20px;
+  
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-shadow: 0 0 4px white;
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+  }
+  
+  h6 {
+    font-size: 12px;
+  }
+  
+  h5 {
+    font-size: 16px;
+  }
+`
+
+export const HeaderButton = styled.div`
+  display: flex;
+  justify-content: end;
+
+  button {
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 5px;
+    :hover {
+      cursor: pointer;
+      background: #ffffff50;
+    }
   }
 `

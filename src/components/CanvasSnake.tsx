@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
 import moveSnake from './moveSnake'
 import { KeyTypes, StatusGame } from '../types/types'
-import styled from 'styled-components'
 import useSnake from '../hooks/useSnake'
 import ModalGame from './ModalGame'
+import { Canvas } from '../styles/styles'
 
 function CanvasSnake (): JSX.Element {
   const { Snake, snakeEventDispatch, startGameDispatch, resetGameDispatch } = useSnake()
@@ -47,8 +47,3 @@ function CanvasSnake (): JSX.Element {
 }
 
 export default CanvasSnake
-
-export const Canvas = styled.canvas`
-  background-image: url(/pattern.svg);
-  box-shadow: inset 0 0 10px #ffffff40;
-`
