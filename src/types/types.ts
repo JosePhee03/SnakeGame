@@ -39,6 +39,6 @@ export enum UserEvent { ARROW = 'ARROW'}
 export type ActionType =
   | { type: SnakeEvents, payload: BodyType }
   | { type: UserEvent, payload: KeyTypes }
-  | { type: StatusGame.PAUSE, payload: SnakeType }
+  | { type: StatusGame.PAUSE }
   | { type: StatusGame.RESET }
   | { type: StatusGame.START }

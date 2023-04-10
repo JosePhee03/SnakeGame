@@ -4,7 +4,7 @@ import { BodyType, KeyTypes, SnakeEvents, SnakeType, StatusGame, UserEvent } fro
 
 interface ReturnType {
   Snake: SnakeType
-  pauseGameDispatch: (Snake: SnakeType) => void
+  pauseGameDispatch: () => void
   startGameDispatch: () => void
   resetGameDispatch: () => void
   snakeEventDispatch: (snakeEvents: SnakeEvents, newBody: BodyType) => void
@@ -14,7 +14,7 @@ interface ReturnType {
 function useSnake (): ReturnType {
   const { Snake, dispatch } = useContext(SnakeContext) as SnakeContextType
 
-  const pauseGameDispatch = (Snake: SnakeType): void => dispatch({ type: StatusGame.PAUSE, payload: Snake })
+  const pauseGameDispatch = (): void => dispatch({ type: StatusGame.PAUSE })
   const startGameDispatch = (): void => dispatch({ type: StatusGame.START })
   const resetGameDispatch = (): void => dispatch({ type: StatusGame.RESET })
   const snakeEventDispatch = (snakeEvents: SnakeEvents, newBody: BodyType): void => dispatch({ type: snakeEvents, payload: newBody })

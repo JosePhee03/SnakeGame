@@ -21,8 +21,8 @@ function SnakeReducer (state: SnakeType, action: ActionType): SnakeType {
       const saveSnake: SnakeType = {
         ...state,
         status: StatusGame.PAUSE,
-        body: action.payload.body,
-        direction: action.payload.direction
+        body: state.body,
+        direction: state.direction
       }
       SetLocalStorage('SNAKE', saveSnake)
       return saveSnake
