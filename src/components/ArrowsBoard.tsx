@@ -3,12 +3,17 @@ import { Arrow, Board } from '../styles/styles'
 import { KeyTypes } from '../types/types'
 import { ArrowIcon } from './Icons'
 import useSnake from '../hooks/useSnake'
+import { OPPOSITE_DIRECTIONS } from '../constants/snakePreset'
 
 function ArrowsBoard (): JSX.Element {
   const { Snake, userPressArrowDispatch } = useSnake()
   const { direction } = Snake
 
-  const pressArrow = (key: KeyTypes): void => userPressArrowDispatch(key)
+  const pressArrow = (key: KeyTypes): void => {
+    if (OPPOSITE_DIRECTIONS[direction as KeyTypes] !== key) {
+      userPressArrowDispatch(key)
+    }
+  }
 
   const keyPressEvent = (event: KeyboardEvent): void => {
     const eventKey = event.key

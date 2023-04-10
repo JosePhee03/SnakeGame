@@ -14,3 +14,10 @@ export const OPACITY = {
   15: '#ffffff15',
   40: '#ffffff40'
 }
+
+export const OPPOSITE_DIRECTIONS = {
+  ArrowUp: 'ArrowDown',
+  ArrowDown: 'ArrowUp',
+  ArrowLeft: 'ArrowRight',
+  ArrowRight: 'ArrowLeft'
+}
