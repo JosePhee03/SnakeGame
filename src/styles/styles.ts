@@ -1,14 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components'
-
-export const snakeSize = 32
-
-const COLORS = {
-  yellow: '#FDF800',
-  cyan: '#00E4F2',
-  pink: '#F000F2',
-  black: '#000000',
-  white: '#FFFFFF'
-}
+import { COLORS, OPACITY } from '../constants/snakePreset'
 
 export const Svg = styled.svg`
   filter: drop-shadow(0 0 4px ${COLORS.white});
@@ -22,7 +13,7 @@ export const Arrow = styled.div`
   align-items: center;
 
   :hover{
-    background: #ffffff15;
+    background: ${OPACITY[15]};
     cursor: pointer;
   }
 
@@ -30,11 +21,6 @@ export const Arrow = styled.div`
     stroke: ${COLORS.yellow};
   }
 `
-
-interface snakeCords {
-  snakeX: number
-  snakeY: number
-}
 
 export const Modal = styled.div`
   display: flex;
@@ -48,7 +34,7 @@ export const Modal = styled.div`
     font-family: 'Press Start 2P', cursive;
     font-size: 18px;
     text-shadow: 0 0 4px white;
-    color: #fff;
+    color: white;
   };
 `
 
@@ -58,25 +44,15 @@ export const ButtonGame = styled.button`
     font-family: 'Press Start 2P', cursive;
     font-size: 12px;
     text-shadow: 0 0 4px white;
-    color: #fff;
+    color: white;
     border-radius: 5px;
     padding: 6px 12px;
     box-shadow: 0 0 4px white, inset 0 0 4px white;
   
   :hover{
     cursor: pointer;
-    background: #ffffff15;
+    background: ${OPACITY[15]};
   }
-`
-
-export const SnakeHead = styled.div<snakeCords>`
-  width: ${snakeSize}px;
-  height: ${snakeSize}px;
-  position: absolute;
-  top: ${props => props.snakeY}px;
-  left: ${props => props.snakeX}px;
-  background: ${COLORS.pink};
-  filter: drop-shadow(0 0 4px ${COLORS.pink});
 `
 
 export const Board = styled.div`
@@ -121,7 +97,7 @@ export const Logo = styled.div`
 
 export const Canvas = styled.canvas`
   background-image: url(/pattern.svg);
-  box-shadow: inset 0 0 10px #ffffff40;
+  box-shadow: inset 0 0 10px ${OPACITY[40]};
 `
 
 export const Main = styled.main`
@@ -129,7 +105,7 @@ export const Main = styled.main`
   height: 100vh;
   display: grid;
   place-content: center;
-  background: #000;
+  background: black;
 `
 
 export const Section = styled.section`
@@ -184,7 +160,7 @@ export const HeaderButton = styled.div`
     border-radius: 5px;
     :hover {
       cursor: pointer;
-      background: #ffffff50;
+      background: ${OPACITY[40]};
     }
   }
 `

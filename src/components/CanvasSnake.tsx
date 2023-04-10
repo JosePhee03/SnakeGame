@@ -4,6 +4,7 @@ import { KeyTypes, StatusGame } from '../types/types'
 import useSnake from '../hooks/useSnake'
 import ModalGame from './ModalGame'
 import { Canvas } from '../styles/styles'
+import { CANVAS_SIZE, COLORS, SNAKE_SIZE } from '../constants/snakePreset'
 
 function CanvasSnake (): JSX.Element {
   const { Snake, snakeEventDispatch, startGameDispatch, resetGameDispatch } = useSnake()
@@ -13,7 +14,7 @@ function CanvasSnake (): JSX.Element {
   const handleButton = (): void => status === StatusGame.PAUSE ? startGameDispatch() : resetGameDispatch()
   useEffect(() => {
     let moveInterval: NodeJS.Timer
-    if (status === 'START') {
+    if (status === StatusGame.START) {
       moveInterval = setInterval(() => {
         const { newBody, snakeEvents } = moveSnake(direction as KeyTypes, body, food)
         snakeEventDispatch(snakeEvents, newBody)
@@ -26,22 +27,22 @@ function CanvasSnake (): JSX.Element {
     const drawSquare = (x: number, y: number, color: string): void => {
       context.fillStyle = color
       context.filter = `drop-shadow(0 0 4px ${color})`
-      context.fillRect(x, y, 32, 32)
+      context.fillRect(x, y, SNAKE_SIZE, SNAKE_SIZE)
     }
 
-    drawSquare(food.foodX, food.foodY, 'yellow')
-    body.map(({ snakeX, snakeY }) => drawSquare(snakeX, snakeY, 'red'))
+    drawSquare(food.foodX, food.foodY, COLORS.yellow)
+    body.map(({ snakeX, snakeY }) => drawSquare(snakeX, snakeY, COLORS.pink))
 
     return (): void => {
       clearInterval(moveInterval)
-      context.clearRect(0, 0, 384, 384)
+      context.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
     }
   }, [body])
 
   return (
     <>
-      {status !== 'START' && <ModalGame status={status} handleButton={handleButton} />}
-      <Canvas ref={canvasRef} width={384} height={384} />
+      {status !== StatusGame.START && <ModalGame status={status} handleButton={handleButton} />}
+      <Canvas ref={canvasRef} width={CANVAS_SIZE} height={CANVAS_SIZE} />
     </>
   )
 }
