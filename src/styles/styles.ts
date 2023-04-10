@@ -79,7 +79,7 @@ export const SnakeHead = styled.div<snakeCords>`
   filter: drop-shadow(0 0 4px ${COLORS.pink});
 `
 
-export const ArrowBoard = styled.div`
+export const Board = styled.div`
   width: 100%;
   height: 60px;
   display: flex;
