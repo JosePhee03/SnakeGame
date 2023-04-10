@@ -1,6 +1,5 @@
 import { createContext, Dispatch } from 'react'
-import { SnakeType } from '../types/types'
-import { ActionType } from './SnakeReducer'
+import { ActionType, SnakeType } from '../types/types'
 
 export interface SnakeContextType {
   Snake: SnakeType
