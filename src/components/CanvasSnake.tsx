@@ -1,15 +1,16 @@
-import { useContext, useEffect, useRef } from 'react'
-import SnakeContext, { SnakeContextType } from '../context/SnakeContext'
+import { useEffect, useRef } from 'react'
 import moveSnake from './moveSnake'
-import { KeyTypes } from '../types/types'
+import { KeyTypes, StatusGame } from '../types/types'
 import styled from 'styled-components'
-import { snakeEventDispatch } from '../context/SnakeProvider'
+import useSnake from '../hooks/useSnake'
+import ModalGame from './ModalGame'
 
 function CanvasSnake (): JSX.Element {
-  const { Snake } = useContext(SnakeContext) as SnakeContextType
+  const { Snake, snakeEventDispatch, startGameDispatch, resetGameDispatch } = useSnake()
   const { body, status, direction, food } = Snake
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
+  const handleButton = (): void => status === StatusGame.PAUSE ? startGameDispatch() : resetGameDispatch()
   useEffect(() => {
     let moveInterval: NodeJS.Timer
     if (status === 'START') {
@@ -39,6 +40,7 @@ function CanvasSnake (): JSX.Element {
 
   return (
     <>
+      {status !== 'START' && <ModalGame status={status} handleButton={handleButton} />}
       <Canvas ref={canvasRef} width={384} height={384} />
     </>
   )

@@ -1,15 +1,13 @@
 import styled from 'styled-components'
 import { Logo, Header } from '../styles/styles'
 import { CrownLogo, PauseIcon } from './Icons'
-import { SnakeType } from '../types/types'
+import useSnake from '../hooks/useSnake'
 
-interface Props {
-  Snake: SnakeType
-  handlePause: () => void
-}
-
-function HeaderMenu ({ Snake, handlePause }: Props): JSX.Element {
+function HeaderMenu (): JSX.Element {
+  const { Snake, pauseGameDispatch } = useSnake()
   const { body, status } = Snake
+
+  const handlePause = (): void => pauseGameDispatch(Snake)
 
   const score = body.length - 1
   const padScore = score.toString().padStart(3, '000')
